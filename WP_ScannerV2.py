@@ -1,4 +1,4 @@
-# Optimized and Recode by @mkdirlove
+# Optimized and Recode by @mkdirlove 
 # Credits to https://github.com/officialallan10k
 # Python 3.10.0
 # For Education Purposes Only
@@ -46,13 +46,14 @@ def _scan(plugin):
         #rVersion = rVersion.text.split("Stable tag: ")[1].split("\n")[0]
         #rVersion = rVersion.text.split("== Changelog ==")[1].split("=")[1].split("=")[0].lower().replace("version","")
         rVersion = version_parser(rVersion.text.split("== Changelog ==")[1].split("=")[1].split("=")[0].lower().replace("version",""))
-        meron.append(str(r.status_code) + ' ' + host + rVersion)
+        meron.append(str(r.status_code) + '\n\n' + host + '\n\n' + rVersion + '\n\n' + 'https://wpscan.com/plugin/' + host.split('plugins/')[1])
         print(Lgreen + ' [+] Found [+] ' + str(r.status_code) + ' ' + host + ' Version: ' + rVersion)
         f.write(host + ' Version: ' + rVersion + '\n')
       except:
-        meron.append(str(r.status_code) + ' ' + host)
-        print(Lgreen + ' [+] Found [+] ' + str(r.status_code) + ' ' + host)
-        f.write(host + '\n')
+        #meron.append(str(r.status_code) + ' ' + host)
+        #print(Lgreen + ' [+] Found [+] ' + str(r.status_code) + ' ' + host)
+        #f.write(host + '\n')
+        pass
     else:
       pass
       #wala.append(str(r.status_code) + ' ' + host)
@@ -153,7 +154,7 @@ else:
 
         robotres = requests.get(roboturl,headers=headers)
 
-        if 'wp-admin' in robotres.text :
+        if 'wp-admin' not in robotres.text :
             print(Dgreen+'\n [+] WordPress Detection : ',Lgreen+'Yes')
 
             feedres = requests.get(feedurl,headers=headers)
@@ -177,16 +178,16 @@ else:
                     print(Lyellw+' [-] WordPress version   : Not Found !')
             sleep(0.8)
 
-            data = json.loads(r.text)
-            siteName = data['home']
-            siteDesc = data['description']
-
-            plugins = data['namespaces']
-
-            print(Dgreen+f'\n [+] Webite name         :',Lgreen+siteName)
-            sleep(0.8)
-            print(Dgreen+'\n [+] Webite description  :',Lgreen+siteDesc)
-            sleep(0.8)
+            
+            if type(r.text) is not str:
+              data = json.loads(r.text)
+              siteName = data['home']
+              siteDesc = data['description']
+              plugins = data['namespaces']
+              print(Dgreen+f'\n [+] Webite name         :',Lgreen+siteName)
+              sleep(0.8)
+              print(Dgreen+'\n [+] Webite description  :',Lgreen+siteDesc)
+              sleep(0.8)
 
             print(Dgreen+'\n [+] Enumerating Plugins :',end=' ')
             print('\n')
