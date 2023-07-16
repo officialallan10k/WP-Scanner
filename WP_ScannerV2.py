@@ -154,7 +154,7 @@ else:
 
         robotres = requests.get(roboturl,headers=headers)
 
-        if 'wp-admin' not in robotres.text :
+        if 'wp-admin' not in robotres.text or 'wp-admin' in robotres.text :
             print(Dgreen+'\n [+] WordPress Detection : ',Lgreen+'Yes')
 
             feedres = requests.get(feedurl,headers=headers)
